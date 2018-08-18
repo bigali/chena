@@ -1,0 +1,3 @@
+rootProject.name = 'chena'
+
+include ':app'
