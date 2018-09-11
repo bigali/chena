@@ -1,6 +1,6 @@
 import Actions, { reducer, INITIAL_STATE } from '../../App/Redux/GithubRedux'
 
-test('request', () => {
+test('popularRequest', () => {
   const username = 'taco'
   const state = reducer(INITIAL_STATE, Actions.userRequest(username))
 
@@ -9,7 +9,7 @@ test('request', () => {
   expect(state.avatar).toBeNull()
 })
 
-test('success', () => {
+test('popularSuccess', () => {
   const avatar = 'http://placekitten.com/200/300'
   const state = reducer(INITIAL_STATE, Actions.userSuccess(avatar))
 
@@ -18,7 +18,7 @@ test('success', () => {
   expect(state.error).toBeNull()
 })
 
-test('failure', () => {
+test('popularFailure', () => {
   const state = reducer(INITIAL_STATE, Actions.userFailure())
 
   expect(state.fetching).toBe(false)

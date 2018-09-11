@@ -12,7 +12,7 @@ test('first calls API', () => {
   expect(step()).toEqual(call(FixtureAPI.getUser, 'taco'))
 })
 
-test('success path', () => {
+test('popularSuccess path', () => {
   const response = FixtureAPI.getUser('taco')
   const step = stepper(getUserAvatar(FixtureAPI, {username: 'taco'}))
   // first step API
@@ -25,7 +25,7 @@ test('success path', () => {
   expect(stepResponse).toEqual(put(GithubActions.userSuccess(avatar)))
 })
 
-test('failure path', () => {
+test('popularFailure path', () => {
   const response = {ok: false}
   const step = stepper(getUserAvatar(FixtureAPI, {username: 'taco'}))
   // first step API

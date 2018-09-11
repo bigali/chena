@@ -2,7 +2,7 @@
 import apisauce from 'apisauce'
 
 // our "constructor"
-const create = (baseURL = 'https://api.github.com/') => {
+const create = (baseURL = 'https://www.googleapis.com/youtube/v3/') => {
   // ------
   // STEP 1
   // ------
@@ -34,10 +34,12 @@ const create = (baseURL = 'https://api.github.com/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
-  const getRoot = () => api.get('')
-  const getRate = () => api.get('rate_limit')
-  const getUser = (username) => api.get('search/users', {q: username})
-
+  /*const getRoot = () => api.get('')
+  const getRate = () => api.get('rate_limit')*/
+  //GET https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=FR&videoCategoryId=10&key={YOUR_API_KEY}
+  const getPopular = () => api.get('videos', {part:'snippet',chart:'mostPopular',regionCode:'FR', videoCategoryId: 10,maxResults:25, key:'AIzaSyC3MHM0IHsxuyJxwCb2Eze2WaG9NsWCrU8'})
+  //https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=soolking&regionCode=FR&key=AIzaSyC3MHM0IHsxuyJxwCb2Eze2WaG9NsWCrU8
+  const getSearch = (term) => api.get('search' , {part: 'snippet',maxResults: 25, q: term, regionCode: 'FR',type:'video', videoCategoryId: 10,key:'AIzaSyC3MHM0IHsxuyJxwCb2Eze2WaG9NsWCrU8'})
   // ------
   // STEP 3
   // ------
@@ -52,9 +54,10 @@ const create = (baseURL = 'https://api.github.com/') => {
   //
   return {
     // a list of the API functions from step 2
-    getRoot,
-    getRate,
-    getUser
+    /*getRoot,
+    getRate,*/
+    getPopular,
+    getSearch
   }
 }
 

@@ -1,29 +1,174 @@
-import React, { Component } from 'react'
-import { ScrollView, Text, Image, View } from 'react-native'
-import { Images } from '../Themes'
-
+import React, {Component} from 'react'
+import {FlatList, Image, ScrollView, Text, View} from 'react-native'
+import {Images} from '../Themes'
+import {Colors} from '../Themes'
+import HeaderButtons, {Item} from 'react-navigation-header-buttons';
 // Styles
 import styles from './Styles/LaunchScreenStyles'
+import {connect} from 'react-redux'
+import YoutubeActions from '../Redux/YoutubeRedux'
+import PlaylistActions from '../Redux/PlaylistRedux'
+import Card from "./Card";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, FAB, Paragraph, TextInput} from 'react-native-paper';
+import SongRow from "../Components/SongRow";
 
-export default class LaunchScreen extends Component {
-  render () {
+
+class LaunchScreen extends Component {
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerLeft: (
+        <HeaderButtons>
+          <Item
+            title="hamburger"
+            ButtonElement={<Image source={Images.menuButton}
+                                  style={{height: 25, width: 25, backgroundColor: 'transparent'}}/>}
+            buttonWrapperStyle={{marginLeft: 10}}
+            onPress={() => navigation.navigate('DrawerOpen')}
+          />
+        </HeaderButtons>
+      ),
+      headerRight: (
+        <HeaderButtons>
+          <Item
+            title="add"
+            ButtonElement={<Image source={Images.searchButton}
+                                  style={{height: 25, width: 25, backgroundColor: 'transparent'}}/>}
+            buttonWrapperStyle={{marginRight: 10}}
+            onPress={() => navigation.navigate('SearchScreen')}
+          />
+        </HeaderButtons>
+      ),
+      title: 'Library',
+    }
+  };
+  state = {
+    visible: false,
+    text: ''
+  };
+  _showDialog = () => this.setState({ visible: true });
+  _hideDialog = () => this.setState({ visible: false });
+  _keyExtractor = (item, index) => item.id;
+  _renderPopularItem = ({item}) => {
+    const snippet = item.snippet
+    const titleAuthor = snippet.title.split(' - ')
+    const title = titleAuthor[0]
+    const author = titleAuthor[1]
+    return (
+      <Card uri={snippet.thumbnails.medium.url} titleText={styles.titleText} title={title} author={author}/>
+    )
+  }
+
+  _renderPlaylistItem = ({item}) => {
+    return (
+      <Card onPress={() => this.props.navigation.navigate('PlaylistScreen')} playlist={item} uri={'http://www.prun.net/im/design/cover-default.png'} titleText={styles.titleText} title={item.name} author={item.songs.length}/>
+    )
+  }
+
+
+  _renderHeader = (title) => {
+    return (
+      <Text style={[styles.titleText, {fontSize: 24, margin: 16}]}>
+        {title}
+      </Text>
+    )
+  }
+
+  componentDidMount() {
+    const {navigation, getPopular} = this.props
+    getPopular()
+  }
+
+  render() {
     return (
       <View style={styles.mainContainer}>
-        <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
-          <View style={styles.centered}>
-            <Image source={Images.launch} style={styles.logo} />
-          </View>
+          <View style={{marginTop: 16}}>
 
-          <View style={styles.section} >
-            <Image source={Images.ready} />
-            <Text style={styles.sectionText}>
-              This probably isn't what your app is going to look like. Unless your designer handed you this screen and, in that case, congrats! You're ready to ship. For everyone else, this is where you'll see a live preview of your fully functioning app using Ignite.
-            </Text>
+            {this.props.payload ?
+              <View>
+                {this._renderHeader('POPULAR')}
+                <FlatList
+                  style={{ marginHorizontal: 12 }}
+                  data={this.props.payload.items}
+                  extraData={this.state}
+                  keyExtractor={this._keyExtractor}
+                  renderItem={this._renderPopularItem}
+                  horizontal
+                />
+              </View>
+              :
+              <View/>
+            }
+          </View>
+          <View style={{marginTop: 16}}>
+
+            {this.props.playlists.length ?
+              <View>
+                {this._renderHeader('PLAYLISTS')}
+                <FlatList
+                  style={{ marginHorizontal: 12 }}
+                  data={this.props.playlists}
+                  extraData={this.state}
+                  keyExtractor={this._keyExtractor}
+                  renderItem={this._renderPlaylistItem}
+                  horizontal
+                />
+              </View>
+              :
+              <View/>
+            }
           </View>
 
         </ScrollView>
+        <FAB
+          style={{ position: 'absolute', bottom: 16, right: 16 }}
+          small={false}
+          icon="add"
+          onPress={this._showDialog}
+        />
+        <Dialog
+          visible={this.state.visible}
+          onDismiss={this._hideDialog}
+        >
+          <DialogTitle>Add Playlist</DialogTitle>
+          <DialogContent>
+            <TextInput
+              label='Playlist'
+              value={this.state.text}
+              onChangeText={text => this.setState({ text })}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onPress={() => {
+              this.props.addPlaylist(this.state.text)
+              this.setState({
+                text: '',
+                visible: false
+              })
+            }}>Add</Button>
+            <Button onPress={this._hideDialog}>cancel</Button>
+          </DialogActions>
+        </Dialog>
       </View>
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    // ...redux state to props here
+    nav: state.nav,
+    payload: state.youtube.popularPayload,
+    fetching: state.youtube.popularFetching,
+    playlists: state.playlist.playlists
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getPopular: () => dispatch(YoutubeActions.youtubePopularRequest()),
+    addPlaylist: (name) => dispatch(PlaylistActions.addPlaylist(name))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LaunchScreen)

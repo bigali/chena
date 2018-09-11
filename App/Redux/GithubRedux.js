@@ -29,7 +29,7 @@ export const GithubSelectors = {
 
 /* ------------- Reducers ------------- */
 
-// request the avatar for a user
+// popularRequest the avatar for a user
 export const request = (state, { username }) =>
   state.merge({ fetching: true, username, avatar: null })
 

@@ -1,6 +1,6 @@
 const type = {
-  base: 'Avenir-Book',
-  bold: 'Avenir-Black',
+  base: 'ProximaNova',
+  bold: 'ProximaNova',
   emphasis: 'HelveticaNeue-Italic'
 }
 
@@ -50,6 +50,10 @@ const style = {
   description: {
     fontFamily: type.base,
     fontSize: size.medium
+  },
+  small: {
+    fontFamily: type.base,
+    fontSize: size.small
   }
 }
 
