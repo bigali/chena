@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, FlatList, Image} from 'react-native'
+import {View, Text, FlatList, Image, Slider} from 'react-native'
 import {connect} from 'react-redux'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HeaderButtons, {HeaderButton, Item} from 'react-navigation-header-buttons';
@@ -28,7 +28,7 @@ class PlaylistScreen extends React.PureComponent {
           <Item title="back" iconName="ios-arrow-back" onPress={() => navigation.goBack()}/>
         </HeaderButtons>
       ),
-      title:navigation.state.params.playlist.name,
+      title: navigation.state.params.playlist.name,
       headerRight: (
         <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
           <Item title="search" iconName="ios-search" onPress={() => navigation.navigate('SearchScreen')}/>
@@ -111,15 +111,16 @@ class PlaylistScreen extends React.PureComponent {
                     onPress={() => console.log('Pressed')}
                   />
                 </View>
-                <View style={{flexDirection: 'row'}}>
-                    <FAB
-                      small
-                      icon="play-arrow"
-                      onPress={() => console.log('Pressed')}
-                    />
+                <View style={{flexDirection: 'row', marginLeft: 15}}>
+                  <FAB
+                    small
+                    icon="play-arrow"
+                    onPress={() => console.log('Pressed')}
+                    style={{height: 41}}
+                  />
 
                   <IconButton
-                    icon="repeat"
+                    icon="skip-next"
                     color={Colors.grey500}
                     size={20}
                     onPress={() => console.log('Pressed')}
@@ -130,11 +131,16 @@ class PlaylistScreen extends React.PureComponent {
               </View>
             </View>
           </View>
+          <View style={{ flexDirection: 'row', marginHorizontal: 8, marginVertical: 16 }}>
+            <Text>3:15</Text>
+            <Slider style={{ width: '87%', elevation: 4 }}  />
+            <Text>5:12</Text>
+          </View>
 
         </View>
         {songs ?
           <FlatList
-            style={{marginHorizontal: 12}}
+            style={{marginHorizontal: 15}}
             data={songs}
             extraData={this.state}
             keyExtractor={this._keyExtractor}
