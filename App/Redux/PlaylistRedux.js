@@ -44,15 +44,8 @@ const add =(playlists , song, id) => {
 }
 export const addToPlaylist = (state, action) => {
   const {id, song} = action
-  const playlists=Immutable(state.playlists)
-   const newPlaylist = {playlists: [state.playlists[id].set("songs", [...state.playlists[id].songs, song])]}
-  var mergeConfig = {
-    merger: mergers.updatingByIdArrayMerger,
-    mergerObjectIdentifier: "id"
-  };
-  var result = state.merge(newPlaylist, mergeConfig);
-  console.log(playlists)
-  return result
+
+  return state.setIn(['playlists', id, 'songs'], [...state.playlists[id].songs, song])
 }
 
 

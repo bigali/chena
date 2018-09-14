@@ -60,7 +60,7 @@ class LaunchScreen extends Component {
 
   _renderPlaylistItem = ({item}) => {
     return (
-      <Card onPress={() => this.props.navigation.navigate('PlaylistScreen')} playlist={item} uri={'http://www.prun.net/im/design/cover-default.png'} titleText={styles.titleText} title={item.name} author={item.songs.length}/>
+      <Card onPress={() => this.props.navigation.navigate('PlaylistScreen', {playlist: item})} playlist={item} uri={'http://www.prun.net/im/design/cover-default.png'} titleText={styles.titleText} title={item.name} author={item.songs.length}/>
     )
   }
 
