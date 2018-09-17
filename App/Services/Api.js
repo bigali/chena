@@ -40,6 +40,10 @@ const create = (baseURL = 'https://www.googleapis.com/youtube/v3/') => {
   const getPopular = () => api.get('videos', {part:'snippet',chart:'mostPopular',regionCode:'FR', videoCategoryId: 10,maxResults:25, key:'AIzaSyC3MHM0IHsxuyJxwCb2Eze2WaG9NsWCrU8'})
   //https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=soolking&regionCode=FR&key=AIzaSyC3MHM0IHsxuyJxwCb2Eze2WaG9NsWCrU8
   const getSearch = (term) => api.get('search' , {part: 'snippet',maxResults: 25, q: term, regionCode: 'FR',type:'video', videoCategoryId: 10,key:'AIzaSyC3MHM0IHsxuyJxwCb2Eze2WaG9NsWCrU8'})
+
+  //GET https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&regionCode=FR&relatedToVideoId=3f9-9QNdNWY&type=video&videoCategoryId=10&key={YOUR_API_KEY}
+  const getRelated = (videoId) =>  api.get('search' , {part: 'snippet',maxResults: 25,relatedToVideoId:videoId, regionCode: 'FR',type:'video', videoCategoryId: 10,key:'AIzaSyC3MHM0IHsxuyJxwCb2Eze2WaG9NsWCrU8'})
+
   // ------
   // STEP 3
   // ------
@@ -57,7 +61,8 @@ const create = (baseURL = 'https://www.googleapis.com/youtube/v3/') => {
     /*getRoot,
     getRate,*/
     getPopular,
-    getSearch
+    getSearch,
+    getRelated
   }
 }
 

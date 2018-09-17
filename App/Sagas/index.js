@@ -13,7 +13,7 @@ import { YoutubeTypes } from '../Redux/YoutubeRedux'
 
 import { startup } from './StartupSagas'
 import { getUserAvatar } from './GithubSagas'
-import { getPopular, getSearch } from './YoutubeSagas'
+import {getPopular, getRelated, getSearch} from './YoutubeSagas'
 /* ------------- API ------------- */
 
 // The API we use is only used from Sagas, so we create it here and pass along
@@ -29,6 +29,7 @@ export default function * root () {
 
     // some sagas receive extra parameters in addition to an action
     takeLatest(YoutubeTypes.YOUTUBE_POPULAR_REQUEST, getPopular, api),
-    takeLatest(YoutubeTypes.YOUTUBE_SEARCH_REQUEST, getSearch, api)
+    takeLatest(YoutubeTypes.YOUTUBE_SEARCH_REQUEST, getSearch, api),
+    takeLatest(YoutubeTypes.YOUTUBE_RELATED_REQUEST, getRelated, api)
   ])
 }
