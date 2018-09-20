@@ -53,7 +53,7 @@ export function * getRelated (api, action) {
   // get current data from Store
   // const currentData = yield select(YoutubeSelectors.getData)
   // make the call to the api
-  const response = yield call(api.get, videoId)
+  const response = yield call(api.getRelated, videoId)
 
   // popularSuccess?
   if (response.ok) {
