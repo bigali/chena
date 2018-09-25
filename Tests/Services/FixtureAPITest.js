@@ -1,4 +1,4 @@
-import API from '../../App/Services/Api'
+import API from '../../App/Services/YoutubeApi'
 import FixtureAPI from '../../App/Services/FixtureApi'
 import R from 'ramda'
 

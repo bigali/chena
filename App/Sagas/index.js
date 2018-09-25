@@ -1,5 +1,6 @@
 import { takeLatest, all } from 'redux-saga/effects'
-import API from '../Services/Api'
+import YOUTUBE_API from '../Services/YoutubeApi'
+import EXTRACT_AUDIO_API from '../Services/ExtractAudioApi'
 import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
 
@@ -18,7 +19,9 @@ import {getPopular, getRelated, getSearch} from './YoutubeSagas'
 
 // The API we use is only used from Sagas, so we create it here and pass along
 // to the sagas which need it.
-const api = DebugConfig.useFixtures ? FixtureAPI : API.create()
+const youtube_api = DebugConfig.useFixtures ? FixtureAPI : YOUTUBE_API.create()
+const extract_audio_api = DebugConfig.useFixtures ? FixtureAPI : EXTRACT_AUDIO_API.create()
+
 
 /* ------------- Connect Types To Sagas ------------- */
 
@@ -28,8 +31,8 @@ export default function * root () {
     takeLatest(StartupTypes.STARTUP, startup),
 
     // some sagas receive extra parameters in addition to an action
-    takeLatest(YoutubeTypes.YOUTUBE_POPULAR_REQUEST, getPopular, api),
-    takeLatest(YoutubeTypes.YOUTUBE_SEARCH_REQUEST, getSearch, api),
-    takeLatest(YoutubeTypes.YOUTUBE_RELATED_REQUEST, getRelated, api)
+    takeLatest(YoutubeTypes.YOUTUBE_POPULAR_REQUEST, getPopular, youtube_api),
+    takeLatest(YoutubeTypes.YOUTUBE_SEARCH_REQUEST, getSearch, youtube_api),
+    takeLatest(YoutubeTypes.YOUTUBE_RELATED_REQUEST, getRelated, youtube_api)
   ])
 }

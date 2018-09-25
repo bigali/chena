@@ -64,3 +64,38 @@ export function * getRelated (api, action) {
     yield put(YoutubeActions.youtubeRelatedFailure())
   }
 }
+
+export function * getInfo (api, action) {
+  const { videoId } = action
+  // get current data from Store
+  // const currentData = yield select(YoutubeSelectors.getData)
+  // make the call to the api
+  const response = yield call(api.getInfo, videoId)
+
+  // popularSuccess?
+  if (response.ok) {
+    // You might need to change the response here - do this with a 'transform',
+    // located in ../Transforms/. Otherwise, just pass the data back from the api.
+    yield put(YoutubeActions.getInfoSuccess(response.data))
+  } else {
+    yield put(YoutubeActions.getInfoFailure())
+  }
+}
+
+export function * getInfoPlayNow (api, action) {
+  const { videoId } = action
+  // get current data from Store
+  // const currentData = yield select(YoutubeSelectors.getData)
+  // make the call to the api
+  const response = yield call(api.getInfoPlayNow, videoId)
+
+  // popularSuccess?
+  if (response.ok) {
+    // You might need to change the response here - do this with a 'transform',
+    // located in ../Transforms/. Otherwise, just pass the data back from the api.
+    yield put(YoutubeActions.getInfoPlayNowSuccess(response.data))
+  } else {
+    yield put(YoutubeActions.getInfoPlayNowFailure())
+  }
+}
+

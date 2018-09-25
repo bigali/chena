@@ -32,6 +32,7 @@
     "react-native-config": "^0.10.0",
     "react-native-paper": "^v2.0.1",
     "react-native-popup-menu-android": "^1.0.3",
+    "react-native-snap-carousel": "^3.7.4",
     "react-native-vector-icons": "^5.0.0",
     "react-navigation": "^1.5.11",
     "react-navigation-header-buttons": "^2.1.0",

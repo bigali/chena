@@ -49,18 +49,30 @@ class LaunchScreen extends Component {
   _hideDialog = () => this.setState({ visible: false });
   _keyExtractor = (item, index) => item.id;
   _renderPopularItem = ({item}) => {
+    const id = item.id
     const snippet = item.snippet
     const titleAuthor = snippet.title.split(' - ')
     const title = titleAuthor[0]
     const author = titleAuthor[1]
     return (
-      <Card uri={snippet.thumbnails.medium.url} titleText={styles.titleText} title={title} author={author}/>
+      <Card
+        uri={snippet.thumbnails.medium.url}
+        titleText={styles.titleText} title={title}
+        author={author}
+        onPress={() => this.props.navigation.navigate('PlayNowScreen', {videoId: id})}
+      />
     )
   }
 
   _renderPlaylistItem = ({item}) => {
     return (
-      <Card onPress={() => this.props.navigation.navigate('PlaylistScreen', {playlist: item})} playlist={item} uri={'http://www.prun.net/im/design/cover-default.png'} titleText={styles.titleText} title={item.name} author={item.songs.length}/>
+      <Card
+        onPress={() => this.props.navigation.navigate('PlaylistScreen', {playlist: item})}
+        playlist={item}
+        uri={'http://www.prun.net/im/design/cover-default.png'}
+        titleText={styles.titleText}
+        title={item.name}
+        author={item.songs.length}/>
     )
   }
 
