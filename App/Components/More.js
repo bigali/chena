@@ -47,7 +47,6 @@ class More extends Component {
   }
 
   handleMoreItemSelect = (item: PopupMenuItem) => {
-    alert('Pressed: ' + item.label)
     switch (item.id) {
       case 'add_playlist':
         this._openDialog2()

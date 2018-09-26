@@ -17,7 +17,7 @@ const create = (baseURL = 'https://shielded-spire-26129.herokuapp.com/') => {
       'Cache-Control': 'no-cache'
     },
     // 10 second timeout...
-    timeout: 10000
+    timeout: 30000
   })
 
   // ------

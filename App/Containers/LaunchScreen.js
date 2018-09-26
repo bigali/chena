@@ -3,13 +3,15 @@ import {FlatList, Image, ScrollView, Text, View} from 'react-native'
 import {Images} from '../Themes'
 import {Colors} from '../Themes'
 import HeaderButtons, {Item} from 'react-navigation-header-buttons';
+import {Item as MaterialItem, MaterialHeaderButtons} from "../Components/MyHeaderButtons";
+
 // Styles
 import styles from './Styles/LaunchScreenStyles'
 import {connect} from 'react-redux'
 import YoutubeActions from '../Redux/YoutubeRedux'
 import PlaylistActions from '../Redux/PlaylistRedux'
 import Card from "./Card";
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, FAB, Paragraph, TextInput} from 'react-native-paper';
+import {Button, Dialog, FAB, Paragraph, TextInput} from 'react-native-paper';
 import SongRow from "../Components/SongRow";
 
 
@@ -21,22 +23,17 @@ class LaunchScreen extends Component {
           <Item
             title="hamburger"
             ButtonElement={<Image source={Images.menuButton}
-                                  style={{height: 25, width: 25, backgroundColor: 'transparent'}}/>}
+                                  style={{height: 30, width: 30, backgroundColor: 'transparent'}}/>}
             buttonWrapperStyle={{marginLeft: 10}}
             onPress={() => navigation.navigate('DrawerOpen')}
           />
         </HeaderButtons>
       ),
       headerRight: (
-        <HeaderButtons>
-          <Item
-            title="add"
-            ButtonElement={<Image source={Images.searchButton}
-                                  style={{height: 25, width: 25, backgroundColor: 'transparent'}}/>}
-            buttonWrapperStyle={{marginRight: 10}}
-            onPress={() => navigation.navigate('SearchScreen')}
-          />
-        </HeaderButtons>
+        <MaterialHeaderButtons>
+          <MaterialItem title="add" iconName="search" onPress={() => navigation.navigate('SearchScreen')}/>
+        </MaterialHeaderButtons>
+
       ),
       title: 'Library',
     }
@@ -142,15 +139,15 @@ class LaunchScreen extends Component {
           visible={this.state.visible}
           onDismiss={this._hideDialog}
         >
-          <DialogTitle>Add Playlist</DialogTitle>
-          <DialogContent>
+          <Dialog.Title>Add Playlist</Dialog.Title>
+          <Dialog.Content>
             <TextInput
               label='Playlist'
               value={this.state.text}
               onChangeText={text => this.setState({ text })}
             />
-          </DialogContent>
-          <DialogActions>
+          </Dialog.Content>
+          <Dialog.Actions>
             <Button onPress={() => {
               this.props.addPlaylist(this.state.text)
               this.setState({
@@ -159,7 +156,7 @@ class LaunchScreen extends Component {
               })
             }}>Add</Button>
             <Button onPress={this._hideDialog}>cancel</Button>
-          </DialogActions>
+          </Dialog.Actions>
         </Dialog>
       </View>
     )

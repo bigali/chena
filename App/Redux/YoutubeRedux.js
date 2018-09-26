@@ -16,10 +16,10 @@ const { Types, Creators } = createActions({
   getInfoRequest: ['videoId'],
   getInfoSuccess: ['payload'],
   getInfoFailure: null,
-  getInfoPlayNowRequest: ['array'],
+  getInfoPlayNowRequest: ['videoId'],
   getInfoPlayNowSuccess: ['payload'],
   getInfoPlayNowFailure: null,
-  getInfoListRequest: ['videoId'],
+  getInfoListRequest: ['array'],
   getInfoListSuccess: ['payload'],
   getInfoListFailure: null,
 })

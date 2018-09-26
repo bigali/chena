@@ -1,9 +1,9 @@
 import React from 'react'
 import {View, Text, FlatList, Image, Slider} from 'react-native'
 import {connect} from 'react-redux'
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import HeaderButtons, {HeaderButton, Item} from 'react-navigation-header-buttons';
-import {IconButton, Colors, FAB} from 'react-native-paper';
+import {IconButton, Colors, FAB} from 'react-native-paper'
+import {Item, MaterialHeaderButtons} from "../Components/MyHeaderButtons";
+
 
 // More info here: https://facebook.github.io/react-native/docs/flatlist.html
 
@@ -12,27 +12,22 @@ import styles from './Styles/PlaylistScreenStyle'
 import SongRow from "../Components/SongRow";
 import Fonts from "../Themes/Fonts";
 
-const IoniconsHeaderButton = passMeFurther => (
-  // the `passMeFurther` variable here contains props from <Item .../> as well as <HeaderButtons ... />
-  // and it is important to pass those props to `HeaderButton`
-  // then you may add some information like icon size or color (if you use icons)
-  <HeaderButton {...passMeFurther} IconComponent={Ionicons} iconSize={24} color="white"/>
-);
 
 
 class PlaylistScreen extends React.PureComponent {
   static navigationOptions = ({navigation}) => {
     return {
       headerLeft: (
-        <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-          <Item title="back" iconName="ios-arrow-back" onPress={() => navigation.goBack()}/>
-        </HeaderButtons>
+        <MaterialHeaderButtons>
+          <Item title="add" iconName="chevron-left" onPress={() => navigation.goBack()}/>
+        </MaterialHeaderButtons>
       ),
       title: navigation.state.params.playlist.name,
       headerRight: (
-        <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-          <Item title="search" iconName="ios-search" onPress={() => navigation.navigate('SearchScreen')}/>
-        </HeaderButtons>
+        <MaterialHeaderButtons>
+          <Item title="add" iconName="search" onPress={() => navigation.navigate('SearchScreen')}/>
+        </MaterialHeaderButtons>
+
       ),
     }
   }

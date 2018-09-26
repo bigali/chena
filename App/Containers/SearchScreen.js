@@ -1,36 +1,27 @@
 import React from 'react'
 import {View, Text, FlatList, TextInput} from 'react-native'
 import {connect} from 'react-redux'
-
-// More info here: https://facebook.github.io/react-native/docs/flatlist.html
-import HeaderButtons, {HeaderButton, Item} from 'react-navigation-header-buttons';
-import Images from "../Themes/Images";
 import SearchComponent from "../Components/SearchComponent";
 
 // Styles
 import styles from './Styles/SearchScreenStyle'
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Card from "./Card";
-import SongRow from "../Components/SongRow";
 
-const IoniconsHeaderButton = passMeFurther => (
-  // the `passMeFurther` variable here contains props from <Item .../> as well as <HeaderButtons ... />
-  // and it is important to pass those props to `HeaderButton`
-  // then you may add some information like icon size or color (if you use icons)
-  <HeaderButton {...passMeFurther} IconComponent={Ionicons} iconSize={23} color="white"/>
-);
+import SongRow from "../Components/SongRow";
+import {Item, MaterialHeaderButtons} from "../Components/MyHeaderButtons";
+
+
 
 class SearchScreen extends React.PureComponent {
 
 
   static navigationOptions = ({navigation}) => {
     return {
-      headerTitle: <SearchComponent/>,
       headerLeft: (
-        <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-          <Item title="search" iconName="ios-arrow-back" onPress={() => navigation.goBack()}/>
-        </HeaderButtons>
+        <MaterialHeaderButtons>
+          <Item title="add" iconName="chevron-left" onPress={() => navigation.goBack()}/>
+        </MaterialHeaderButtons>
       ),
+      headerTitle: <SearchComponent/>
     }
   };
   /* ***********************************************************
