@@ -21,7 +21,7 @@ export default class SongRow extends Component {
 
   render () {
     return (
-      <TouchableRipple>
+      <TouchableRipple onPress={this.props.onPress}>
         <View style={styles.container}>
           <View
             style={{

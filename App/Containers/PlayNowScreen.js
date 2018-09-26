@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {ScrollView, Text, Dimensions, Platform, View, Image, Slider} from 'react-native'
 import {connect} from 'react-redux'
 import Carousel from 'react-native-snap-carousel';
+import { get } from 'lodash'
 
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -115,6 +116,13 @@ class PlayNowScreen extends Component {
 
     const { trackInfoPlayNowPayload } = this.props
     const { slider1ActiveSlide } = this.state
+    let title = get(trackInfoPlayNowPayload, `[${slider1ActiveSlide}].title`, "")
+    let author = get(trackInfoPlayNowPayload, `[${slider1ActiveSlide}].author`, "")
+    let lenght = get(trackInfoPlayNowPayload, `[${slider1ActiveSlide}].length`, 0)
+    let duration = this.fancyTimeFormat(lenght)
+
+
+
     return (
       <View style={styles.container}>
         {trackInfoPlayNowPayload ?
@@ -143,10 +151,10 @@ class PlayNowScreen extends Component {
             </View>
             <View style={{justifyContent:'center', alignItems:'center'}}>
               <Text style={{textAlign: 'center', width: width, fontSize: 20, fontWeight: "bold"}}>
-                {trackInfoPlayNowPayload[slider1ActiveSlide].title}
+                {title}
               </Text>
               <Text style={[Fonts.style.normal, {fontSize: 18, textAlign: 'center', width: width}]}>
-                {trackInfoPlayNowPayload[slider1ActiveSlide].author}
+                {author}
               </Text>
             </View>
 
@@ -154,7 +162,7 @@ class PlayNowScreen extends Component {
             <View style={{height: height*0.2,justifyContent:'center', alignItems: 'center', flexDirection: 'row', marginHorizontal: 16, marginVertical: 16 }}>
               <Text>0</Text>
               <Slider style={{ width: '80%', elevation: 4 }}  />
-              <Text>{this.fancyTimeFormat(trackInfoPlayNowPayload[slider1ActiveSlide].length)}</Text>
+              <Text>{duration}</Text>
             </View>
 
 
